@@ -1,0 +1,40 @@
+---
+layout: default
+title: Home
+---
+
+<div class="about">
+  <p>I write software for a living and enjoy it. I currently work at <a href="https://www.gojek.io/">gojek</a>, where I lead the merchant promotions tech team. Before that, I co-ran <a href="https://activesphere.com">activesphere</a>, a boutique software consulting firm. Here's my <a href="https://www.linkedin.com/in/rahuljayaraman">linkedin</a>.</p>
+
+  <p>Apart from tech, I enjoy cycling, running, swimming and <a href="https://500px.com/p/rahuljayaraman?view=photos">photography</a>. A long time back, I used to play a board game called <a href="https://en.wikipedia.org/wiki/Go_(game)">go</a>, at which I represented India at the 4th Korean Prime Minister's Cup.</p>
+
+  <p>I occasionally write about some of my tech explorations here.</p>
+</div>
+
+<div class="posts">
+  {% for post in paginator.posts %}
+  <article class="post">
+    <h3 class="post-title">
+      <a href="{{ post.url | relative_url }}">
+        {{ post.title }}
+      </a>
+    </h3>
+
+    <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date_to_string }}</time>
+
+  </article>
+  {% endfor %}
+</div>
+
+<div class="pagination">
+  {% if paginator.next_page %}
+    <a class="pagination-item older" href="{{ paginator.next_page_path | relative_url }}">Older</a>
+  {% else %}
+    <span class="pagination-item older">Older</span>
+  {% endif %}
+  {% if paginator.previous_page %}
+    <a class="pagination-item newer" href="{{ paginator.previous_page_path | prepend: relative_url }}">Newer</a>
+  {% else %}
+    <span class="pagination-item newer">Newer</span>
+  {% endif %}
+</div>
