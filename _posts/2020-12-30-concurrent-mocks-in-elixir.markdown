@@ -74,11 +74,9 @@ But this won't work across process boundaries. ie. if the mocked code lives on a
 
 `Module` may be called via any sequence of calls between processes. `Module` needs to know which mock implementation was set at the start of these sequences by the test.
 
-## Tracing
-
 ## $callers
 
-One way to solve the problem is to use [$callers](https://hexdocs.pm/elixir/1.10.0/Task.html#module-ancestor-and-caller-tracking). It allows Module to know processes in a call sequence, but only if processes are [Tasks](https://hexdocs.pm/elixir/Task.html) or managed by [supervised tasks](https://hexdocs.pm/elixir/Task.html#module-supervised-tasks)
+Another way to solve the problem is to use [$callers](https://hexdocs.pm/elixir/1.10.0/Task.html#module-ancestor-and-caller-tracking). It allows Module to know processes in a call sequence, but only if processes are [Tasks](https://hexdocs.pm/elixir/Task.html) or managed by [supervised tasks](https://hexdocs.pm/elixir/Task.html#module-supervised-tasks)
 
 [Mox](https://github.com/dashbitco/mox) is another mocking library that uses this [approach](https://github.com/dashbitco/mox/blob/fac3fb0cc87bdbf8fb25ba675611b4c4055add4f/lib/mox.ex#L716) to solve the concurrency problem.
 
