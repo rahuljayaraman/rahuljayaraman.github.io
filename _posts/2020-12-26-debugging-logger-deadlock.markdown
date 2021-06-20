@@ -63,7 +63,7 @@ I looked at the logger's documentation again, and found the [handle_otp_reports]
 
 On running the test a few more times, the tests seem to have stopeed freezing, and I saw the actual error.
 
-```log
+```
 =ERROR REPORT====
 ** gen_event handler {'Elixir.Logger.Backends.Console',<0.2833.0>} crashed.
 ** Was installed in 'Elixir.Logger'
@@ -91,7 +91,7 @@ Here's a script which causes the issue. It tries to get Logger in sync mode befo
 [Seems to cause freezes on 1.9.x, 1.10.x and 1.11](https://travis-ci.org/github/rahuljayaraman/logger_backend_crash)
 
 
-```
+```elixir
 config :logger,
   backends: [
     LoggerBackendCrash

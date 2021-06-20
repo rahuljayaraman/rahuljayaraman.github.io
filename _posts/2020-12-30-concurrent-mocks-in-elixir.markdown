@@ -15,7 +15,7 @@ To solve this, tests with such mocks run with `async: false`.
 
 Let's look at the problem closer, by attempting to solve the concurrency issue. Consider a module `Module`, that has a function `io`. Let's try mocking out `io` for a test.
 
-```ex
+```elixir
 defmodule Module do
   def exec() do
     io().do_something(_arg1, _arg2)
@@ -105,7 +105,7 @@ We can use `seq_trace.set_token(:label, label)` to set a label for a sequential 
 
 Let's set a label along with the test.
 
-```ex
+```elixir
 defmodule ModuleTest1 do
    test "mock 1" do
      label = "label1"
@@ -150,7 +150,7 @@ end
 
 On the `Module` side, we look for the label set by the calling process, and choose a mocked implementation.
 
-```ex
+```elixir
 defmodule Module do
   def exec() do
     io().do_something(_arg1, _arg2)
@@ -192,38 +192,9 @@ Might be ok to ignore these issues for the test environment though. Other librar
 
 ## Full implementation with `seq_trace`
 
-Full implementation can be found [here](https://github.com/rahuljayaraman/cswap). It
+Sample implementation can be found [here](https://github.com/rahuljayaraman/cswap). It
 
 - Supports concurrent mocking across process boundaries using [:seq_trace](https://erlang.org/doc/man/seq_trace.html)
 - Supports a decorator to swap code for test builds, using [arjan/decorator](https://github.com/arjan/decorator)
 
-Module ends up looking like this
-
-```ex
-defmodule Module do
-  use CSwap.Decorator
-  
-  def exec() do
-    io().do_something(_arg1, _arg2)
-  end
-  
-  @decorator mockable()
-  defp io() do
-     Application.get_env(:your_app, :io)
-  end
-end
-```
-
-In the test
-
-```ex
-defmodule ModuleTest1 do
-   test "mock 1" do
-     ref = make_ref()
-     :ok = CSwap.mock(Module, :io, fn -> ref end)
-     assert Module.io() == ref
-   end
-end
-```
-
-Bug in seq_trace: https://bugs.erlang.org/browse/ERL-602
+Note: [Bug](https://bugs.erlang.org/browse/ERL-602) in seq_trace 

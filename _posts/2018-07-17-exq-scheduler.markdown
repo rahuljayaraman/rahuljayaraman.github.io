@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Introducing exq-scheduler, a distributed scheduler for Sidekiq"
-date:   2018-12-24 15:41:54 +0530
+date:   2018-07-17 15:41:54 +0530
 excerpt: To solve some synchronization issues in sidekiq-scheduler, we wrote exq-scheduler
 ---
 
@@ -23,7 +23,7 @@ We had to understand some finer aspects of distributed systems, to get a better 
 
 These time schedules can be configured using [cron](https://en.wikipedia.org/wiki/Cron) syntax as follows.
 
-```
+```elixir
 config :exq_scheduler, :schedules,
   signup_report: %{
     cron: "0 * * * *",
@@ -48,7 +48,7 @@ If scheduler experiences down time for some reason (node restarted etc.), jobs m
 
 - Define schedules for a timezone.
 
-```
+```elixir
 config :exq_scheduler,
   missed_jobs_window: 60 * 60 * 1000,
   time_zone: "Asia/Kolkata"
