@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Building state from un-ordered events"
+title:  "Building state from unordered events"
 date:   2020-06-25 15:41:54 +0530
 excerpt:  "Ordering events when source doesn't encode order"
 ---
