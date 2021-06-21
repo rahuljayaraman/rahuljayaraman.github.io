@@ -4,7 +4,7 @@
 // page is wrapped in `.page` and is only used on the page layout.
 
 .post {
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
 .page,
@@ -73,10 +73,6 @@
         position: absolute;
         right: -200px;
     }
-}
-
-.about {
-    margin-top: -30px;
 }
 
 .article_with_image {
