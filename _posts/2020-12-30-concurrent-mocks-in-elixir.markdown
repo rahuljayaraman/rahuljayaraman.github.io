@@ -4,16 +4,15 @@ title:  "Concurrent mocks in elixir using seq_trace"
 date:   2020-12-30 15:41:54 +0530
 ---
 
-Let's say you want to test some function, by mocking out one of it's dependencies. If your test mocks a module using a library like [meck](https://github.com/eproxus/meck), it creates a new version of that module. Other concurrent tests running at that time might also get this new version of the module that they weren't expecting.
+If your test mocks a module using a library like [meck](https://github.com/eproxus/meck), it creates a new version of that module. Other concurrent tests running at that time might also get this new version of the module that they weren't expecting.
 
-Even if you use `Application.put_env` to swap implementations, it changes env for the entire application and the new implementation becomes available to all concurrent tests.
+Even if you use `Application.put_env` to swap implementations, it changes the env for the entire application and the new implementation becomes available to all concurrent tests.
 
-To solve this, tests with such mocks run with `async: false`.
-
+To solve this, tests with such mocks typically run with `async: false`.
 
 ## Narrowing down on the problem
 
-Let's look at the problem closer, by attempting to solve the concurrency issue. Consider a module `Module`, that has a function `io`. Let's try mocking out `io` for a test.
+Let's look at the problem closer. Consider a module `Module`, that has a function `io`. Let's try implementing a way to mock `io` for a test.
 
 ```elixir
 defmodule Module do
@@ -195,4 +194,4 @@ Sample implementation can be found [here](https://github.com/rahuljayaraman/cswa
 - Supports concurrent mocking across process boundaries using [:seq_trace](https://erlang.org/doc/man/seq_trace.html)
 - Supports a decorator to swap code for test builds, using [arjan/decorator](https://github.com/arjan/decorator)
 
-Note: [Bug](https://bugs.erlang.org/browse/ERL-602) in seq_trace 
+**Note:** [Bug](https://bugs.erlang.org/browse/ERL-602) in seq_trace 
