@@ -5,12 +5,12 @@ date:   2020-06-25 15:41:54 +0530
 excerpt:  "Ordering events when source doesn't encode order"
 ---
 
-NOTE: I had written this article while at Gojek to share with my team members. I haven't had time to generalize the article sufficiently for an external audience. Apologies in advance.
+*NOTE: I had written this article while at Gojek to share with my team members. I haven't had time to generalize the article sufficiently for an external audience. Apologies in advance.*
 
 For one of our features, events had to be ordered to build some state. But our infra didn't guarantee order and the event producer did not reliably encode order into the event. 
 While trying to solve this problem, we realized that sometimes, it's possible to order events before they occur. 
 
-This article tries to build the intuition that state machines only protect against invalid transitions, not getting into invalid state. If your events are out of order, your services might get into inconsistent (not invalid) state. We explore how one can design an eventually consistent system, with out of order events by removing cycles from your state machine (if feasible for business).
+This article tries to build the intuition that state machines only protect against invalid state transitions. They don't protect your data from becoming inconsistent, if your events are out of order.We explore how one can design an eventually consistent system, with out of order events by removing cycles from your state machine (if feasible for business).
 
 Before going further, here's some background about our system.
 
